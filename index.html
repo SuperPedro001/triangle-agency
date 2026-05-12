@@ -5415,18 +5415,10 @@ function showTriangleWithProfile(account) {
   document.getElementById('agentBrief').style.display = '';
   document.getElementById('briefDivider').style.display = '';
 
-  // Apply permission
+  // Apply permission — hide manager-only cards from agents
   if (account.role !== 'manager') {
     document.querySelectorAll('.resource-card[data-perm="manager"]').forEach(function(el) {
-      var link = el.querySelector('.resource-link');
-      if (link) {
-        link.removeAttribute('href');
-        link.removeAttribute('target');
-        link.classList.add('locked');
-        link.textContent = '🔒 权限不足，仅限经理查阅';
-        link.style.pointerEvents = 'none';
-        link.style.color = 'var(--text-muted)';
-      }
+      el.style.display = 'none';
     });
   }
 
@@ -6667,18 +6659,9 @@ function enterTriangle(role) {
   document.getElementById('coverPage').style.display = 'none';
   document.getElementById('triangleContent').style.display = 'block';
   document.body.style.background = 'var(--bg-primary)';
-  // Apply permission: manager-only cards show locked state for agents
   if (role !== 'manager') {
     document.querySelectorAll('.resource-card[data-perm="manager"]').forEach(el => {
-      const link = el.querySelector('.resource-link');
-      if (link) {
-        link.removeAttribute('href');
-        link.removeAttribute('target');
-        link.classList.add('locked');
-        link.textContent = '🔒 权限不足，仅限经理查阅';
-        link.style.pointerEvents = 'none';
-        link.style.color = 'var(--text-muted)';
-      }
+      el.style.display = 'none';
     });
   }
   window.scrollTo(0, 0);
