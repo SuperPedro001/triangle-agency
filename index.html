@@ -5239,7 +5239,7 @@ window.addEventListener('load', () => {
 // ========== COVER PAGE & LOGIN SYSTEM ==========
 // --- Account Storage ---
 // ========== SERVER SYNC ==========
-var API_BASE = '/api/';
+var API_BASE = (window.location.hostname.indexOf('netlify.app') !== -1) ? '/api/' : 'http://triangle-agency.140.82.16.144.nip.io/api/';
 
 function apiGet(name, callback) {
   var xhr = new XMLHttpRequest();
