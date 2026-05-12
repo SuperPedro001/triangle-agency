@@ -3216,6 +3216,11 @@
   .arc-cell.marker .arc-label { color: #fff; font-size: 14px; font-family: var(--font-sans); font-weight: 900; }
   .arc-cell.beyond-max .arc-label { color: rgba(255,255,255,0.12); }
   .arc-cell.beyond-max.filled .arc-label { color: rgba(255,255,255,0.18); }
+  .arc-link {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    text-decoration: none; z-index: 3;
+  }
   @keyframes markerBounce {
     0%, 100% { transform: translateX(-50%) translateY(0); }
     50% { transform: translateX(-50%) translateY(-2px); }
@@ -5772,7 +5777,7 @@ function openProfileById(id) {
 
   var arcs = [
     { key: 'arcComVal', maxKey: 'arcComMax', zh: '职能', en: 'COMPETENCY', cssClass: 'competency',
-      labels: {2:'A3',5:'D4',8:'G3',11:'J3',14:'N3',17:'Q3',20:'T3',23:'W8',26:'Y2'} },
+      labels: {2:'A3',5:'D4',8:'G3',11:'J3',14:'N3',17:'Q3',20:'T3',23:'W8',26:'Y2'}, makeLinks: true },
     { key: 'arcReaVal', maxKey: 'arcReaMax', zh: '现实', en: 'REALITY', cssClass: 'reality',
       labels: {0:'C4',3:'L11',7:'E3',9:'O4',13:'T6',15:'V2',19:'X3',21:'H5',25:'E3'} },
     { key: 'arcAnoVal', maxKey: 'arcAnoMax', zh: '异常', en: 'ANOMALY', cssClass: 'anomaly',
@@ -5784,6 +5789,7 @@ function openProfileById(id) {
     var val = profile[arc.key] || 0;
     var max = profile[arc.maxKey] || 30;
     var labels = arc.labels || {};
+    var makeLinks = arc.makeLinks || false;
     body += '<div class="arc-track ' + arc.cssClass + '">';
     body += '<div class="arc-track-header">';
     body += '<div class="arc-track-name">' + arc.zh + '<span>' + arc.en + '</span></div>';
@@ -5797,7 +5803,15 @@ function openProfileById(id) {
       if (ci >= max) cellClass += ' beyond-max';
       if (ci === val - 1 && val > 0 && val <= max) cellClass += ' marker';
       var label = labels[ci] || '';
-      body += '<div class="' + cellClass + '">' + (label ? '<span class="arc-label">' + label + '</span>' : '') + '</div>';
+      var cellContent = '';
+      if (label) {
+        if (makeLinks && ci < val && ci < max) {
+          cellContent = '<a href="职能记录轨高墙文件/' + label + '.pdf" target="_blank" class="arc-link"><span class="arc-label">' + label + '</span></a>';
+        } else {
+          cellContent = '<span class="arc-label">' + label + '</span>';
+        }
+      }
+      body += '<div class="' + cellClass + '">' + cellContent + '</div>';
     }
     // Row 1: cells 29 down to 15 (right to left = snake)
     for (var ci = 14; ci >= 0; ci--) {
@@ -5807,7 +5821,15 @@ function openProfileById(id) {
       if (idx >= max) cellClass2 += ' beyond-max';
       if (idx === val - 1 && val > 0 && val <= max) cellClass2 += ' marker';
       var label2 = labels[idx] || '';
-      body += '<div class="' + cellClass2 + '">' + (label2 ? '<span class="arc-label">' + label2 + '</span>' : '') + '</div>';
+      var cellContent2 = '';
+      if (label2) {
+        if (makeLinks && idx < val && idx < max) {
+          cellContent2 = '<a href="职能记录轨高墙文件/' + label2 + '.pdf" target="_blank" class="arc-link"><span class="arc-label">' + label2 + '</span></a>';
+        } else {
+          cellContent2 = '<span class="arc-label">' + label2 + '</span>';
+        }
+      }
+      body += '<div class="' + cellClass2 + '">' + cellContent2 + '</div>';
     }
     body += '</div></div>';
   }
