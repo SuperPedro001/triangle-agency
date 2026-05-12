@@ -5777,11 +5777,11 @@ function openProfileById(id) {
 
   var arcs = [
     { key: 'arcComVal', maxKey: 'arcComMax', zh: '职能', en: 'COMPETENCY', cssClass: 'competency',
-      labels: {2:'A3',5:'D4',8:'G3',11:'J3',14:'N3',17:'Q3',20:'T3',23:'W8',26:'Y2'}, makeLinks: true },
+      labels: {2:'A3',5:'D4',8:'G3',11:'J3',14:'N3',17:'Q3',20:'T3',23:'W8',26:'Y2'}, makeLinks: true, folder: '职能记录轨高墙文件' },
     { key: 'arcReaVal', maxKey: 'arcReaMax', zh: '现实', en: 'REALITY', cssClass: 'reality',
-      labels: {0:'C4',3:'L11',7:'E3',9:'O4',13:'T6',15:'V2',19:'X3',21:'H5',25:'E3'} },
+      labels: {0:'C4',3:'L11',7:'E2',9:'O4',13:'T6',15:'V2',19:'X3',21:'H5',25:'E3'}, makeLinks: true, folder: '现实记录轨高墙文件' },
     { key: 'arcAnoVal', maxKey: 'arcAnoMax', zh: '异常', en: 'ANOMALY', cssClass: 'anomaly',
-      labels: {0:'H4',1:'H3',4:'U2',6:'X2',10:'N1',12:'Q2',16:'L10',18:'G8',22:'A7'} }
+      labels: {0:'H4',1:'H3',4:'U2',6:'X2',10:'N1',12:'Q2',16:'L10',18:'G8',22:'A7'}, makeLinks: true, folder: '异常记录轨高墙文件' }
   ];
 
   for (var ai = 0; ai < arcs.length; ai++) {
@@ -5790,6 +5790,7 @@ function openProfileById(id) {
     var max = profile[arc.maxKey] || 30;
     var labels = arc.labels || {};
     var makeLinks = arc.makeLinks || false;
+    var folder = arc.folder || '';
     body += '<div class="arc-track ' + arc.cssClass + '">';
     body += '<div class="arc-track-header">';
     body += '<div class="arc-track-name">' + arc.zh + '<span>' + arc.en + '</span></div>';
@@ -5806,7 +5807,7 @@ function openProfileById(id) {
       var cellContent = '';
       if (label) {
         if (makeLinks && ci < val && ci < max) {
-          cellContent = '<a href="职能记录轨高墙文件/' + label + '.pdf" target="_blank" class="arc-link"><span class="arc-label">' + label + '</span></a>';
+          cellContent = '<a href="' + folder + '/' + label + '.pdf" target="_blank" class="arc-link"><span class="arc-label">' + label + '</span></a>';
         } else {
           cellContent = '<span class="arc-label">' + label + '</span>';
         }
@@ -5824,7 +5825,7 @@ function openProfileById(id) {
       var cellContent2 = '';
       if (label2) {
         if (makeLinks && idx < val && idx < max) {
-          cellContent2 = '<a href="职能记录轨高墙文件/' + label2 + '.pdf" target="_blank" class="arc-link"><span class="arc-label">' + label2 + '</span></a>';
+          cellContent2 = '<a href="' + folder + '/' + label2 + '.pdf" target="_blank" class="arc-link"><span class="arc-label">' + label2 + '</span></a>';
         } else {
           cellContent2 = '<span class="arc-label">' + label2 + '</span>';
         }
